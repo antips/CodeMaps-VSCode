@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as helloWorld from './helloWorld';
+import * as getCodeStructure from './getCodeStructure';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "codemaps-vscode" is now active!');
@@ -20,6 +21,7 @@ function activateCommands(context: vscode.ExtensionContext) {
 	let commandsToLink = {
 		/* eslint-disable @typescript-eslint/naming-convention */
 		'codemaps-vscode.helloWorld': helloWorld.helloWorld,
+		'codemaps-vscode.getCodeStructureOfCurrentFile': getCodeStructure.getCodeStructureOfCurrentFile,
 		/* eslint-enable @typescript-eslint/naming-convention */
 	};
 
@@ -29,6 +31,7 @@ function activateCommands(context: vscode.ExtensionContext) {
 	for (const [commandId, functionToCall] of Object.entries(commandsToLink)) {
 		console.log(`commandId: ${commandId}, functionToCall: ${functionToCall}`);
 		context.subscriptions.push(vscode.commands.registerCommand(commandId, functionToCall));
+		
 	}
 }
 
