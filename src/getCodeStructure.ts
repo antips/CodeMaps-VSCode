@@ -4,14 +4,14 @@ import * as vscode from 'vscode';
  * Prints in the console the symbols structure of the current active file.
  * @returns nothing
  */
-export function getCodeStructureOfCurrentFile(): void {
+export function getCodeStructureOfCurrentFile(context: vscode.ExtensionContext): void {
     const activeEditor = vscode.window.activeTextEditor;
 
     if (!activeEditor) {
         console.log("VS Code has no current active editor.");
         return;
     }
-    
+
     showSymbolsOfDocument(activeEditor.document);
 }
 
@@ -26,7 +26,7 @@ async function showSymbolsOfDocument(document: vscode.TextDocument) {
         vscode.window.showErrorMessage(`Getting structure of the document '${document.fileName}' failed.`);
         return;
     }
-    
+
     console.log(`Info of the document '${document.fileName}':`);
     let moduleSymbolsStructure: SymbolsStructure | undefined = getStructureOfSymbols(symbols);
     console.log(JSON.stringify(moduleSymbolsStructure, null, 4));
@@ -45,12 +45,12 @@ interface SymbolsStructure {
  * @returns a dictionnary that contains all the symbols data, in hierarchy.
  */
 function getStructureOfSymbols(symbols: vscode.DocumentSymbol[]): SymbolsStructure | undefined {
-    if (!symbols.length) return undefined;
-    
+    if (!symbols.length) { return undefined; }
+
     let symbolsStructure: SymbolsStructure = {};
     symbols.forEach((symbol) => {
         let value = getStructureOfSymbols(symbol.children);
-        symbolsStructure[symbol.name] = (value === undefined) ? symbol : {"symbol": symbol, "children": value};
+        symbolsStructure[symbol.name] = (value === undefined) ? symbol : { "symbol": symbol, "children": value };
     });
 
     return symbolsStructure;

@@ -14,12 +14,13 @@
     "contributes": {
         "commands": [
             {
-                "command": "codemaps-vscode.helloWorld",
-                "title": "CodeMaps: Hello World"
-            },
-            {
                 "command": "codemaps-vscode.getCodeStructureOfCurrentFile",
                 "title": "CodeMaps: Get current file information"
+            },
+            {
+                "command": "catCoding.start",
+                "title": "Start new cat coding session",
+                "category": "Cat Coding"
             }
         ]
     },
